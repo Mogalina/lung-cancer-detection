@@ -5,4 +5,9 @@
 *.aux
 *.bbl
 *.out
-
+*.bcf
+*.fdb_latexmk
+*.fls
+*.run.xml
+*.gz
+*.toc
