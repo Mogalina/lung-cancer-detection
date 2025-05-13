@@ -1,0 +1,126 @@
+% Set page format and font size
+\documentclass[a4paper,12pt]{article}
+
+% --------------------------------------------------------------------------------------------------
+% PACKAGES                                      
+% -------------------------------------------------------------------------------------------------- 
+
+\usepackage[utf8]{inputenc}                        % Support for UTF-8 input
+\usepackage[T1]{fontenc}                           % Better font encoding
+\usepackage{lmodern}                               % Use Latin Modern font
+\usepackage[margin=1in, bottom=1in]{geometry}      % Set page margins
+\usepackage{graphicx}                              % Enable image inclusion
+\usepackage{xcolor}                                % Allow text coloring
+\usepackage{titlesec}                              % Customize title formats
+\usepackage{fancyhdr}                              % Enable custom headers/footers
+\usepackage{setspace}                              % Line spacing control
+\usepackage{titling}                               % More control over the title
+\usepackage{parskip}                               % No paragraph indentation; adds spacing instead
+\usepackage[backend=biber,style=numeric]{biblatex} % Enable bibliographic references
+
+% --------------------------------------------------------------------------------------------------
+% BIBLIOGRAPHIC RESOURCES
+% --------------------------------------------------------------------------------------------------
+
+\addbibresource{references.bib}
+
+% --------------------------------------------------------------------------------------------------
+% CUSTOM COLORS
+% --------------------------------------------------------------------------------------------------
+
+\definecolor{royalblue}{RGB}{0,35,102}
+
+% --------------------------------------------------------------------------------------------------
+% SECTION STYLE SETUP
+% --------------------------------------------------------------------------------------------------
+
+% Customize section title
+\titleformat{\section}
+  {\color{royalblue}\normalfont\large\bfseries}
+  {\thesection.}{1em}{}
+
+% Customize subsection title
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{1em}{}
+
+% Customize subsubsection title
+\titleformat{\subsubsection}
+  {\normalfont\small\bfseries\itshape}
+  {\thesubsubsection}{1em}{}
+
+% Spacing above and below section titles
+\titlespacing*{\section}{0pt}{2.2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.9em}
+\titlespacing*{\subsubsection}{0pt}{1em}{0.5em}
+
+\begin{document}
+
+% --------------------------------------------------------------------------------------------------
+% HEADER & FOOTER SETUP
+% --------------------------------------------------------------------------------------------------
+
+\pagestyle{fancy}
+\fancyhf{} % Clear default header and footer
+
+\fancyhead[C]{\nouppercase{\leftmark}} % Centered section title in header
+\fancyfoot[C]{\thepage}                % Page number in footer
+
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} % Update header with section title
+
+% --------------------------------------------------------------------------------------------------
+% TITLE PAGE
+% --------------------------------------------------------------------------------------------------
+
+\begin{titlepage}
+    \centering
+
+    \includegraphics[width=0.2\textwidth]{assets/ubb.png}\par\vspace{0.5cm} % University logo
+
+    {\scshape\large Babe\c{s}-Bolyai University\\Faculty of Mathematics and Computer Science\par}
+    \vspace{2.0cm}
+
+    {\huge\bfseries Lung Cancer Medical Documentation Paper\par}
+    \vspace{2.0cm}
+
+    {\Large Moghioro\c{s} Eric \\ Croitoru Andreea Bianca\par}
+    \vspace{0.5cm}
+
+    \vfill
+
+    \noindent
+    \begin{minipage}[t]{0.48\textwidth}
+        \raggedright
+        {\large Prof. Drd. Dio\c{s}an Laura \\ Drd. Limboi Sergiu}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \raggedleft
+        {\large May 2025}
+    \end{minipage}
+\end{titlepage}
+
+% --------------------------------------------------------------------------------------------------
+% DOCUMENT BODY
+% --------------------------------------------------------------------------------------------------
+
+\onehalfspacing % Set 1.5 line spacing for readability
+
+\tableofcontents % Generate the table of contents
+\newpage         % Start content on a new page
+
+% Include each chapter from separate files
+\input{chapters/01-overview}
+\input{chapters/02-etiology}
+\input{chapters/03-clinical}
+\input{chapters/04-diagnosis}
+\input{chapters/05-prognosis}
+\input{chapters/06-prevention}
+\input{chapters/07-research}
+\input{chapters/08-conclusion}
+
+% Include bibliographic references
+\newpage
+\printbibliography
+
+\end{document}
