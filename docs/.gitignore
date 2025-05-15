@@ -1,11 +1,10 @@
-.vscode/
 *.zip
-.DS_Store
 *.log
 *.aux
 *.bbl
 *.out
 *.bcf
+*.bbl
 *.fdb_latexmk
 *.fls
 *.run.xml
