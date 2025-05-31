@@ -113,7 +113,7 @@ performance, especially in tasks involving subtle morphological differences betw
 \begin{center} 
     \includegraphics
     [width=0.7\textwidth]{../assets/02-dataset/label-distribution-after-preprocessing.png}
-    
+
     \small\textit{\hypertarget{figura3}Figure 3. Distribution of images label after preprocessing.}
 \end{center}
 \vspace{1em}
@@ -184,30 +184,30 @@ Despite its usefulness, the IQ-OTH/NCCD dataset presents several limitations:
 
 \begin{itemize}
     % Dataset size limitation and risks of overfitting
-    \item \textbf{Limited Dataset Size}: Only 3,609 CT images from 110 patients — a relatively
+    \item \textbf{Limited Dataset Size:} Only 3,609 CT images from 110 patients — a relatively
     small dataset — may lead to overfitting and reduced generalization.
 
     % Initial class imbalance, especially for benign cases
-    \item \textbf{Class Imbalance}: A severe initial imbalance, especially in benign cases, may 
+    \item \textbf{Class Imbalance:} A severe initial imbalance, especially in benign cases, may 
     affect model reliability, despite augmentation efforts.
 
     % Subjectivity and potential inconsistency in manual labeling
-    \item \textbf{Annotation Variability}: Expert annotations can still be subjective, with 
+    \item \textbf{Annotation Variability:} Expert annotations can still be subjective, with 
     interobserver variability potentially introducing label noise.
 
     % Use of 2D slices omits volumetric (3D) diagnostic context
-    \item \textbf{Lack of 3D Context}: Working with individual 2D slices disregards spatial 
+    \item \textbf{Lack of 3D Context:} Working with individual 2D slices disregards spatial 
     continuity across scans, possibly omitting valuable diagnostic information.
 
     % JPEG compression and quality variance may impact feature extraction
-    \item \textbf{Resolution Inconsistency}: JPEG compression artifacts and varying image quality
+    \item \textbf{Resolution Inconsistency:} JPEG compression artifacts and varying image quality
     hinder feature consistency and model accuracy.
 
     % Trade-offs made in preprocessing may sacrifice valuable data
-    \item \textbf{Preprocessing Trade-offs}: Removal of non-square images and resizing may discard
+    \item \textbf{Preprocessing Trade-offs:} Removal of non-square images and resizing may discard
     informative content or distort lesion morphology.
 
     % Dataset demography restricts model generalization across populations
-    \item \textbf{Geographic and Demographic Bias}: Patients from a specific region in Iraq limit 
+    \item \textbf{Geographic and Demographic Bias:} Patients from a specific region in Iraq limit 
     generalizability across different populations and scanner environments.
 \end{itemize}
