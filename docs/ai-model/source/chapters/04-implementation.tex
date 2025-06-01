@@ -1,0 +1,81 @@
+% --------------------------------------------------------------------------------------------------
+% Section: Implementation
+% --------------------------------------------------------------------------------------------------
+
+\section{Implementation}
+
+% Brief introduction to ResNet, focusing on its innovation: residual connections to solve vanishing 
+% gradients.
+\textbf{ResNet}, introduced by Kaiming He et al. in 2015, is a deep convolutional neural network 
+architecture designed to overcome the vanishing gradient problem that hampers training of very deep 
+networks. It achieves this by using residual learning through shortcut (skip) connections that 
+allow gradients to flow directly across layers, enabling stable training of networks with dozens or 
+even hundreds of layers without performance degradation. \cite{gb2023}
+
+% Justification for using ResNet in a medical context.
+This architecture has been widely adopted in medical imaging tasks, including lung cancer detection, 
+due to its ability to learn complex hierarchical features from images while maintaining training 
+stability and accuracy. \cite{jptcp2023}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Environment and tools
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Environment and tools}
+% Details about development environment, choice of language/framework, and hardware limitations.
+The implementation of the lung cancer detection system was carried out using the \textit{Python 
+programming language}, chosen for its readability and wide support in the machine learning 
+community. The model was developed and trained using the \textit{PyTorch framework}, known for its 
+dynamic computation graph and intuitive design. All experiments were conducted on a macOS 
+environment using CPU-based processing, as no dedicated GPU was available. Despite the computational 
+limitations, careful model optimization and efficient batch processing allowed for manageable 
+training times. The overall environment provided a stable and flexible foundation for implementing 
+and testing the ResNet50-based multiclass classification model.
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Model setup
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Model setup}
+% Overview of how the ResNet50 model was loaded and adapted to the custom task.
+The model architecture for this project was based on \textbf{ResNet50}, a 50-layer deep 
+convolutional neural network known for its use of residual connections to enable training of very 
+deep networks. Using PyTorch’s \textit{torchvision.model}, a pre-trained version of ResNet50 was 
+loaded, leveraging weights learned from the given dataset.
+
+\begin{itemize}
+    % Explains the basic building blocks for feature extraction in CNNs.
+    \item \textbf{Convolutional Layers:} In ResNet, convolutional layers are organized within 
+    residual blocks and include a combination of 1×1 and 3×3 convolutions (bottleneck blocks) to 
+    efficiently capture complex features while controlling computational cost. They form the 
+    fundamental building blocks for feature extraction in the network.
+
+    % Key innovation of ResNet: shortcut connections for residual learning.
+    \item \textbf{Residual Blocks:} The hallmark of ResNet, residual blocks add the input of a block 
+    directly to its output via shortcut connections. This residual learning framework allows the 
+    network to learn the difference (residual) between the input and desired output, which helps 
+    prevent the vanishing gradient problem and enables training of very deep networks with improved 
+    accuracy and convergence.
+    
+    % Describes the use and benefit of max pooling to reduce spatial dimensions.
+    \item \textbf{Pooling Layer:} After the first 7×7 convolution layer and ReLU activation, a 3×3 
+    max pooling with stride 2 is applied. Pooling reduces the number of parameters, adds translation 
+    invariance, and helps control overfitting.
+
+    % BatchNorm standardizes outputs, improving training speed and stability.
+    \item \textbf{Batch Normalization Layer:} Batch normalization is applied after each 
+    convolutional layer and before the activation (ReLU). It helps to standardize the inputs to each 
+    layer (zero mean and unit variance), making the model more stable.
+
+    % ReLU provides non-linearity and is applied after each BatchNorm layer.
+    \item \textbf{Activation Functions:} The primary activation function used is ReLU (Rectified 
+    Linear Unit), defined as \textit{f(x) = max(0, x)}. ReLU is applied after each Batch 
+    Normalization layer in each convolutional block.
+
+    % The final classification layer adapted to a 3-class problem instead of ImageNet's 1000.
+    \item \textbf{Fully Connected (Dense) Layer:} After all the convolutional and pooling layers, 
+    the output feature map is flattened into a vector. This vector is passed to a fully connected 
+    layer. The original ResNet50 has a Dense layer with 1000 outputs (for the 1000 ImageNet classes) 
+    followed by a softmax activation, but in our case we replaced the final dense layer with one 
+    that outputs 3 neurons, each representing a class (benign, malignant, normal).
+\end{itemize}

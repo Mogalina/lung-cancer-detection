@@ -1,0 +1,48 @@
+% --------------------------------------------------------------------------------------------------
+% Section: Introduction
+% --------------------------------------------------------------------------------------------------
+
+\section{Introduction}
+
+% Contextual background on the significance of lung cancer and motivation for early detection
+Lung cancer is one of the most lethal cancers globally, with a high mortality rate primarily caused 
+by late detection. Early and accurate diagnosis plays a pivotal role in improving treatment outcomes 
+and patient survival. Recent advances in artificial intelligence, particularly in deep learning, 
+have paved the way for automated systems that can assist in medical image analysis with a 
+performance nearing that of expert radiologists.
+
+% General description of the project and what it aims to solve, introducing the use of CNNs
+This project introduces a multi-stage deep learning pipeline designed to support the detection, 
+classification, and localization of lung abnormalities in axial slices from chest CT scans. The 
+pipeline employs 2D Convolutional Neural Networks (CNNs) in a modular architecture to replicate the 
+diagnostic process used by clinicians.
+
+% List of components in the proposed system, explained clearly and sequentially
+The pipeline is composed of the following key components:
+
+\begin{enumerate}
+    % First model: does the initial categorization of CT slices into Normal, Benign, or Malignant
+    \item \textbf{Primary Classification Model:} A multi-class CNN that analyzes a given CT slice 
+    and classifies it into one of three categories: \emph{Normal}, \emph{Benign}, or 
+    \emph{Malignant}. This model acts as the entry point of the pipeline and quickly filters out 
+    normal cases.
+
+    % Second model: only runs on positive cases (Benign/Malignant) to find the tumor's location
+    \item \textbf{Tumor Localization Model:} If the classification result is \emph{Benign} or 
+    \emph{Malignant}, the image is passed to a secondary CNN that performs object localization. This 
+    model predicts bounding box coordinates that delineate the tumor area within the image, thus 
+    providing spatial context and visual support for clinical interpretation.
+
+\end{enumerate}
+
+% Benefits of combining classification and localization for real-world usage and diagnostics
+By combining classification and localization, the system not only flags potentially pathological 
+cases but also highlights the specific region of interest, making it a valuable decision-support 
+tool for radiologists. Each model is trained and validated independently to optimize its performance 
+and ensure robustness across diverse imaging conditions.
+
+% Closing statement for the Introduction section; previews what the document will cover next
+This modular design allows for flexible updates, such as replacing or fine-tuning individual 
+components as more data becomes available or clinical needs evolve. Future sections will describe 
+the dataset, preprocessing techniques, augmentation strategies, model architectures, training 
+methodologies, evaluation metrics, and experimental results.
