@@ -20,17 +20,17 @@ configurations: a GPU-enabled environment and a traditional CPU-based environmen
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|}
-\hline
-\textbf{Hardware} & \textbf{Total Training Time} & \textbf{Average Time/Epoch} \\ 
-\hline
-\multicolumn{1}{|l|}{CPU (Apple M2, 10 cores)} & 
-\multicolumn{1}{l|}{5 hours 20 minutes} & 
-\multicolumn{1}{l|}{12.8 minutes} \\
-\hline
-\multicolumn{1}{|l|}{GPU (MPS)} & 
-\multicolumn{1}{l|}{48 minutes} & 
-\multicolumn{1}{l|}{1.92 minutes} \\
-\hline
+    \hline
+    \textbf{Hardware} & \textbf{Total Training Time} & \textbf{Average Time/Epoch} \\ 
+    \hline
+    \multicolumn{1}{|l|}{CPU (Apple M2, 10 cores)} & 
+    \multicolumn{1}{l|}{5 hours 20 minutes} & 
+    \multicolumn{1}{l|}{12.8 minutes} \\
+    \hline
+    \multicolumn{1}{|l|}{GPU (MPS)} & 
+    \multicolumn{1}{l|}{48 minutes} & 
+    \multicolumn{1}{l|}{1.92 minutes} \\
+    \hline
 \end{tabular}
 \caption{Training Time Comparison over 20 Epochs}
 \end{table}
@@ -47,6 +47,7 @@ faster experimentation and model iteration.
 \vspace{1em}
 \begin{center} 
     \includegraphics[width=\textwidth]{../assets/07-results/graph-cpu-vs-gpu.png} 
+
     \small\textit{Chart comparison of training time between GPU and CPU.} 
 \end{center}
 \vspace{1em} 
@@ -63,28 +64,28 @@ consumption and estimated CO\textsubscript{2} emissions of the two setups.
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Hardware} & \textbf{Power Usage} & \textbf{Time} & \textbf{Energy} & 
-\textbf{CO\textsubscript{2} Emission (kg)} \\
-\hline
-\multicolumn{1}{|l|}{CPU} & 
-\multicolumn{1}{l|}{65 W} & 
-\multicolumn{1}{l|}{5.33 h} & 
-\multicolumn{1}{l|}{0.346} & 
-\multicolumn{1}{l|}{$\approx$0.277} \\
-\hline
-\multicolumn{1}{|l|}{GPU} & 
-\multicolumn{1}{l|}{320 W} & 
-\multicolumn{1}{l|}{0.8 h} & 
-\multicolumn{1}{l|}{0.256} & 
-\multicolumn{1}{l|}{$\approx$0.205} \\
-\hline
+    \hline
+    \textbf{Hardware} & \textbf{Power Usage} & \textbf{Time} & \textbf{Energy} & 
+    \textbf{CO\textsubscript{2} Emission (kg)} \\
+    \hline
+    \multicolumn{1}{|l|}{CPU} & 
+    \multicolumn{1}{l|}{65 W} & 
+    \multicolumn{1}{l|}{5.33 h} & 
+    \multicolumn{1}{l|}{0.346} & 
+    \multicolumn{1}{l|}{$\approx$0.277} \\
+    \hline
+    \multicolumn{1}{|l|}{GPU} & 
+    \multicolumn{1}{l|}{320 W} & 
+    \multicolumn{1}{l|}{0.8 h} & 
+    \multicolumn{1}{l|}{0.256} & 
+    \multicolumn{1}{l|}{$\approx$0.205} \\
+    \hline
 \end{tabular}
 \caption{Energy Consumption and CO\textsubscript{2} Emission Estimates}
 \end{table}
 
-
 \newpage
+
 Assumptions:
 \begin{itemize}
     \item CO\textsubscript{2} emission factor: 0.8 kg CO\textsubscript{2} per kWh 
@@ -169,21 +170,25 @@ TFLOPS under optimal conditions.
 Several hardware and software factors significantly influence deep learning training performance:
 
 \begin{itemize}
+    % Critical for speeding up tensor operations
     \item \textbf{Core Count and Parallelism} – More cores allow parallel execution of matrix 
-    operations. % Critical for speeding up tensor operations
+    operations. 
 
+    % Affects throughput but with trade-offs
     \item \textbf{Clock Speed} – Higher frequencies can increase operation speed, but also power 
-    consumption. % Affects throughput but with trade-offs
+    consumption. 
 
+    % Prevents memory bottlenecks
     \item \textbf{Memory Bandwidth} – High-speed memory access is critical for transferring large 
-    tensors during training. % Prevents memory bottlenecks
+    tensors during training. 
 
+    % Important for temporal locality of data
     \item \textbf{Cache Size and Architecture} – Affects the ability to reuse data without frequent 
-    memory access. % Important for temporal locality of data
+    memory access. 
 
+    % Code-level tuning makes majorimpact
     \item \textbf{Software Optimization} – Efficient usage of libraries such as PyTorch with 
     multithreading and vectorization can impact performance greatly. 
-    % Code-level tuning makes majorimpact
 \end{itemize}
 
 % --------------------------------------------------------------------------------------------------
