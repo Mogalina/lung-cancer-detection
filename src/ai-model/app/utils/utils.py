@@ -31,36 +31,6 @@ def load_config(config_path: str) -> Dict[str, Any]:
         raise
 
 
-def find_first_match(target_name: str) -> Tuple[Optional[str], Optional[str]]:
-    """
-    Recursively scans the root directory to find the first occurrence of a file or directory with the specified
-    target name.
-
-    Args:
-        target_name (str): The name of the file or directory to find.
-
-    Returns:
-        Tuple[Optional[str], Optional[str]]:
-            - The full path to the found item (or None if not found).
-            - A string indicating whether it's a 'file' or 'directory' (or None if not found).
-    """
-    # Extract project directory path
-    current_file_dir = os.path.dirname(os.path.abspath(__file__))
-    root_dir = os.path.abspath(os.path.join(current_file_dir, "..", ".."))
-
-    for root, dirs, files in os.walk(root_dir):
-        # Check if the target is in the current list of files
-        if target_name in files:
-            return os.path.join(root, target_name), 'file'
-
-        # Check if the target is in the current list of directories
-        if target_name in dirs:
-            return os.path.join(root, target_name), 'directory'
-
-    # Target not found in any scanned directory
-    return None, None
-
-
 def extract_config_values(config: Dict[str, Any]) -> Dict[str, Any]:
     """
     Extracts and validates configs values from the loaded dictionary.

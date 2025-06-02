@@ -5,8 +5,16 @@ from app.networking.schemas import PredictionResponse
 from app.utils.utils import read_image
 from typing import Any
 from app.services.model_service import LungCancerModelService
+from app.configs.logging import setup_logging
+
+# Set up application logging
+setup_logging(log_file="app.log")
 
 logger: logging.Logger = logging.getLogger(__name__)
+
+# Instantiate the model service with the given configs file.
+model_service: LungCancerModelService = LungCancerModelService(config_path="configs/config.yaml")
+model_service.load_model()
 
 # Initialize FastAPI app
 app: FastAPI = FastAPI(title="Lung Cancer Detection API", version="1.0")
@@ -18,10 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Instantiate the model service with the given configs file.
-model_service: LungCancerModelService = LungCancerModelService(config_path="config.yaml")
-model_service.load_model()
 
 @app.get("/")
 def root() -> dict[str, str]:

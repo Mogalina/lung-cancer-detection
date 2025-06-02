@@ -24,7 +24,7 @@ RUN conda env create -f environment.yaml
 
 COPY app /app/app
 COPY data /app/data
-COPY app/configs/ /app/configs/
+COPY app/configs /app/configs
 COPY saved-models /app/saved-models
 COPY app/logs /app/logs
 

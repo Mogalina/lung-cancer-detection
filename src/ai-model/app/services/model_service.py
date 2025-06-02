@@ -31,7 +31,6 @@ class LungCancerModelService:
             config_path (str): Path to the configs file.
         """
         # Load and extract configuration using utility functions
-        config_path, _ = find_first_match(target_name=config_path)
         self.config: dict = load_config(config_path)
         config_values: dict = extract_config_values(self.config)
 
@@ -40,8 +39,7 @@ class LungCancerModelService:
         logger.info(f"Using device: {self.device}")
 
         # Assign config values
-        self.data_dir: str
-        self.data_dir, _ = find_first_match(config_values["data_dir"])
+        self.data_dir: str = config_values["data_dir"]
         self.train_dir: str = os.path.join(self.data_dir, "split", "train")
         self.val_dir: str = os.path.join(self.data_dir, "split", "val")
         self.model_path: str = config_values["model_path"]
@@ -175,11 +173,8 @@ class LungCancerModelService:
             input_size (Tuple[int, int, int]): Shape of the input tensor (C, H, W).
             output_file (str): Path to the file where the summary will be saved.
         """
-        output_path: str
-        output_path, _ = find_first_match("logs")
-        output_path = os.path.join(output_path, output_file)
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, "w") as f:
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        with open(output_file, "w") as f:
             with contextlib.redirect_stdout(f):
                 summary(
                     self.model.model,
