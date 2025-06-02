@@ -38,7 +38,14 @@ class LungCancerModel:
             use_pretrained (bool, optional): Whether to initialize ResNet50 with pretrained weights. Defaults to False.
         """
         # Choose device
-        self.device: torch.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if torch.cuda.is_available():
+            self.device: torch.device = torch.device("cuda")
+        elif torch.backends.mps.is_available():
+            self.device: torch.device = torch.device("mps")
+        else:
+            self.device: torch.device = torch.device("cpu")
+        logger.info(f"Using device: {self.device}")
+
         self.num_classes: int = num_classes
         self.model_path: str | None = model_path
 

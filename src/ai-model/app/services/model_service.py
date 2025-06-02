@@ -35,7 +35,12 @@ class LungCancerModelService:
         config_values: dict = extract_config_values(self.config)
 
         # Set device (GPU if available, otherwise CPU)
-        self.device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if torch.cuda.is_available():
+            self.device: torch.device = torch.device("cuda")
+        elif torch.backends.mps.is_available():
+            self.device: torch.device = torch.device("mps")
+        else:
+            self.device: torch.device = torch.device("cpu")
         logger.info(f"Using device: {self.device}")
 
         # Assign config values
