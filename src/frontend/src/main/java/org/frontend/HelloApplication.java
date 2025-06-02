@@ -4,9 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.frontend.controllers.MainController;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Entry point for the JavaFX application.
@@ -23,8 +23,8 @@ public class HelloApplication extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("Lung Cancer Detection"); // Set window title
-        primaryStage.setResizable(true); // Allow window resizing
+        primaryStage.setTitle("Lung Cancer Detection");
+        primaryStage.setResizable(false);
 
         // Load the main FXML layout
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/frontend/pages/main-page.fxml"));
@@ -33,9 +33,9 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(loader.load(), 450, 580);
 
         // Apply external stylesheet
-        scene.getStylesheets().add(getClass().getResource("/org/frontend/styles/main-page.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/frontend/styles/main-page.css")).toExternalForm());
 
-        // Set the scene on the primary stage and display it
+        // Set the scene on the primary stage
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -46,6 +46,6 @@ public class HelloApplication extends Application {
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        launch(); // Launch the JavaFX application
+        launch();
     }
 }

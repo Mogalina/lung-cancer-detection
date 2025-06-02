@@ -4,7 +4,6 @@ module org.frontend {
     requires java.net.http;
     requires org.json;
 
-
     opens org.frontend to javafx.fxml;
     exports org.frontend;
 }

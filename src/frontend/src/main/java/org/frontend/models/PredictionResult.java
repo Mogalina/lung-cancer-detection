@@ -1,19 +1,13 @@
 package org.frontend.models;
+
 /**
  * Represents the result of a prediction from the backend service.
+ *
+ * @param label    The label returned by the prediction.
+ *                 For example: "benign", "malign", or "normal".
+ * @param accuracy The accuracy/confidence level of the prediction, from 0.0 to 1.0.
  */
-public class PredictionResult {
-
-    /**
-     * The label returned by the prediction.
-     * For example: "benign", "malign", or "normal".
-     */
-    private final String label;
-
-    /**
-     * The accuracy/confidence level of the prediction, from 0.0 to 1.0.
-     */
-    private final double accuracy;
+public record PredictionResult(String label, double accuracy) {
 
     /**
      * Constructs a new {@code PredictionResult} with the given label and accuracy.
@@ -21,9 +15,7 @@ public class PredictionResult {
      * @param label    the predicted label (e.g., "malign")
      * @param accuracy the prediction confidence, from 0.0 to 1.0
      */
-    public PredictionResult(String label, double accuracy) {
-        this.label = label;
-        this.accuracy = accuracy;
+    public PredictionResult {
     }
 
     /**
@@ -31,7 +23,8 @@ public class PredictionResult {
      *
      * @return the prediction label
      */
-    public String getLabel() {
+    @Override
+    public String label() {
         return label;
     }
 
@@ -40,7 +33,8 @@ public class PredictionResult {
      *
      * @return the accuracy as a double between 0.0 and 1.0
      */
-    public double getAccuracy() {
+    @Override
+    public double accuracy() {
         return accuracy;
     }
 }

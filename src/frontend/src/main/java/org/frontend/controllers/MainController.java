@@ -2,7 +2,10 @@ package org.frontend.controllers;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -27,12 +30,14 @@ public class MainController {
 
     @FXML
     public StackPane uploadArea;
-    // UI components defined in the FXML file and injected via @FXML
-    @FXML private Button uploadButton;
-    @FXML private Button predictButton;
-    @FXML private Label fileNameLabel;
-    @FXML private ProgressIndicator loadingIndicator;
-    @FXML private Label resultLabel;
+    @FXML
+    private Button predictButton;
+    @FXML
+    private Label fileNameLabel;
+    @FXML
+    private ProgressIndicator loadingIndicator;
+    @FXML
+    private Label resultLabel;
 
     private Stage stage;
     private File selectedFile;
@@ -43,14 +48,13 @@ public class MainController {
      */
     @FXML
     private void initialize() {
-//        uploadButton.setOnAction(e -> selectFile());
         uploadArea.setOnMouseClicked(e -> selectFile());
         predictButton.setOnAction(e -> makePrediction());
     }
 
     /**
      * Opens a FileChooser dialog for the user to select an image file.
-     * Supported formats: PNG, JPG, JPEG.
+     * Preffered formats: png, jpg, jpeg.
      */
     private void selectFile() {
         FileChooser fileChooser = new FileChooser();
@@ -65,7 +69,7 @@ public class MainController {
         selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
-            fileNameLabel.setText("Selected: " + selectedFile.getName());
+            fileNameLabel.setText(selectedFile.getName());
             fileNameLabel.setTextFill(Color.rgb(44, 62, 80));
             predictButton.setDisable(false);
             resultLabel.setVisible(false);
@@ -86,23 +90,10 @@ public class MainController {
         predictButton.setDisable(true);
         resultLabel.setVisible(false);
 
-        // Create and run background task to send image and receive prediction
-//        Task<PredictionResult> predictionTask = new Task<>() {
-//        Thread.sleep(3000);
-//            @Override
-//            protected PredictionResult call() throws Exception {
-//                return sendImageForPrediction(selectedFile);
-//            }
-//        };
-
         Task<PredictionResult> predictionTask = new Task<>() {
             @Override
             protected PredictionResult call() throws Exception {
-                Thread.sleep(3000);
-                String[] labels = {"benign", "malign", "normal"};
-                String label = labels[(int) (Math.random() * labels.length)];
-                double accuracy = 0.75 + (Math.random() * 0.24);
-                return new PredictionResult(label, accuracy);
+                return sendImageForPrediction(selectedFile);
             }
         };
 
@@ -126,21 +117,22 @@ public class MainController {
      *
      * @param imageFile the image file to send
      * @return the parsed PredictionResult from the server response
-     * @throws IOException if there's an error with file I/O or the HTTP request
+     * @throws IOException          if there's an error with file I/O or the HTTP request
      * @throws InterruptedException if the request is interrupted
      */
     private PredictionResult sendImageForPrediction(File imageFile) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
-        String boundary = "----Boundary" + UUID.randomUUID(); // Unique boundary for multipart form
-        String mimeType = Files.probeContentType(imageFile.toPath()); // Detect file MIME type
+        String boundary = "----Boundary" + UUID.randomUUID();
+        String mimeType = Files.probeContentType(imageFile.toPath());
 
-        // Prepare multipart headers and body
+        // Prepare multipart part headers and footers
         String fileName = imageFile.getName();
         byte[] fileBytes = Files.readAllBytes(imageFile.toPath());
 
+        // ⚠️ Corrected the form field name to "image"
         String partHeader = "--" + boundary + "\r\n" +
-                "Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"\r\n" +
+                "Content-Disposition: form-data; name=\"image\"; filename=\"" + fileName + "\"\r\n" +
                 "Content-Type: " + mimeType + "\r\n\r\n";
 
         String partFooter = "\r\n--" + boundary + "--\r\n";
@@ -148,20 +140,20 @@ public class MainController {
         byte[] headerBytes = partHeader.getBytes();
         byte[] footerBytes = partFooter.getBytes();
 
-        // Concatenate all byte arrays into the full request body
+        // Combine all byte arrays
         byte[] requestBody = new byte[headerBytes.length + fileBytes.length + footerBytes.length];
         System.arraycopy(headerBytes, 0, requestBody, 0, headerBytes.length);
         System.arraycopy(fileBytes, 0, requestBody, headerBytes.length, fileBytes.length);
         System.arraycopy(footerBytes, 0, requestBody, headerBytes.length + fileBytes.length, footerBytes.length);
 
-        // Build HTTP request
+        // Create HTTP request
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/api/predict"))
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                 .POST(HttpRequest.BodyPublishers.ofByteArray(requestBody))
                 .build();
 
-        // Send request and parse response
+        // Send request and get response
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
@@ -180,29 +172,18 @@ public class MainController {
      * @param result the prediction result to display
      */
     private void displayResult(PredictionResult result) {
-        String text = String.format(" %s (confidence level: %.1f%%)",
-                result.getLabel().toUpperCase(),
-                result.getAccuracy() * 100);
+        String text = String.format("%s (confidence - %.1f%%)",
+                result.label().toUpperCase(),
+                result.accuracy() * 100);
 
         resultLabel.setText(text);
-
-        // Set color based on classification label
-        Color textColor;
-        switch (result.getLabel().toLowerCase()) {
-            case "benign" -> textColor = Color.DARKORANGE;
-            case "malign" -> textColor = Color.DARKRED;
-            case "normal" -> textColor = Color.DARKGREEN;
-            default -> textColor = Color.BLACK;
-        }
-
-        resultLabel.setTextFill(textColor);
         resultLabel.setVisible(true);
     }
 
     /**
      * Displays an error alert with the specified title and message.
      *
-     * @param title the alert dialog title
+     * @param title   the alert dialog title
      * @param message the error message
      */
     private void showAlert(String title, String message) {
