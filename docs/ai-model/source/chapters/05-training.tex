@@ -18,7 +18,7 @@ several key hyperparameters were carefully selected.
 
 \begin{itemize}
     % Epochs control how many full passes through the training data occur.
-    \item \textbf{Epochs:} The training was conducted over \textbf{10 epochs}, meaning the entire 
+    \item \textbf{Epochs:} The training was conducted over \textbf{20 epochs}, meaning the entire 
     dataset was passed through the model ten times. Ten epochs allow the model to learn the 
     underlying patterns without excessive overfitting.
 
@@ -34,6 +34,14 @@ several key hyperparameters were carefully selected.
     chosen to accommodate CPU-based training and to balance between convergence speed and memory 
     efficiency.
 \end{itemize}
+
+\vspace{1em}
+\begin{center} 
+    \includegraphics[width=0.7\textwidth]{../assets/05-training/train-evaluation.png} 
+
+    \small\textit{Model training result (accuracy and loss) overview over epochs.}
+\end{center}
+\vspace{1em}
 
 % --------------------------------------------------------------------------------------------------
 % Subsection: Loss Function and Optimizer
