@@ -34,27 +34,27 @@ This system uses a two-stage deep learning approach:
 
 ## Running the Application
 
-### 1. Clone the repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/Mogalina/lung-cancer-detection.git
 cd lung-cancer-detection
 ```
 
-### 2. Run AI model server
+### 2. Run AI Model Server
 ```bash
 cd lung-cancer-detection/src/ai-model
 docker build -t lung-cancer-api .                                                         
 docker run -p 6000:6000 lung-cancer-api  
 ```
 
-### 3. Run backend server
+### 3. Run Backend Server
 ```bash
 cd lung-cancer-detection/src/backend
 ./gradlew build
 ./gradlew run
 ```
 
-### 4. Run frontend client
+### 4. Run Frontend Client
 ```bash
 cd lung-cancer-detection/src/client
 ./gradlew build
