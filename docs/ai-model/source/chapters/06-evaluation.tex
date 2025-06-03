@@ -1,0 +1,120 @@
+% --------------------------------------------------------------------------------------------------
+% Evaluation Section
+% --------------------------------------------------------------------------------------------------
+
+\section{Evaluation}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Metrics Used
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Evaluation Metrics}
+
+% Explain the importance of evaluation metrics in model performance assessment
+To assess the performance of the lung cancer detection model based on ResNet50, several standard 
+evaluation metrics were used. These metrics provide a comprehensive overview of how well the model 
+performs on the task of distinguishing between multiple lung cancer classifications.
+
+% List of commonly used metrics with definitions and formulas
+\begin{itemize}
+    % Accuracy: Overall correctness of the model
+    \item \textbf{Accuracy} – the proportion of correct predictions (both true positives and true 
+    negatives) among the total number of predictions. It is defined as:
+    \[
+    \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+    \]
+
+    % AUC: Discriminative capability of the model
+    \item \textbf{AUC (Area Under the Curve)} – measures the ability of the classifier to 
+    distinguish between classes. It represents the area under the Receiver Operating Characteristic 
+    (ROC) curve. Higher AUC indicates better performance.
+
+    % Sensitivity: Ability to detect positive cases correctly
+    \item \textbf{Sensitivity (Recall or True Positive Rate)} – the proportion of actual positives 
+    correctly identified by the model. It is calculated as:
+    \[
+    \text{Sensitivity} = \frac{TP}{TP + FN}
+    \]
+
+    % Specificity: Ability to detect negative cases correctly
+    \item \textbf{Specificity (True Negative Rate)} – the proportion of actual negatives correctly 
+    identified by the model. It is calculated as:
+    \[
+    \text{Specificity} = \frac{TN}{TN + FP}
+    \]
+\end{itemize}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Confusion Matrix Table
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Sample Results}
+
+% Present the confusion matrix as a result of model testing
+After training the ResNet50 model on the lung cancer dataset and evaluating on the test set, we 
+obtained the following confusion matrix:
+
+% Confusion Matrix Table
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{} & \textbf{Predicted Benign} & \textbf{Predicted Malignant} & \textbf{Predicted Normal} \\
+        \hline
+        \textbf{Actual Benign} & 165 & 1 & 14 \\
+        \hline
+        \textbf{Actual Malignant} & 3 & 162 & 16 \\
+        \hline
+        \textbf{Actual Normal} & 5 & 0 & 177 \\
+        \hline
+    \end{tabular}
+    \caption{Confusion matrix of model predictions across three classes.}
+\end{table}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Metric Values Derived from the Table
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Derived Metric Values}
+
+% Compute evaluation metrics using values from the confusion matrix
+Based on the confusion matrix shown above, we compute the following metric values (reported by the system):
+
+\begin{itemize}
+    % Accuracy calculation
+    \item \textbf{Accuracy:} 0.9282
+    % Sensitivity calculation
+    \item \textbf{Sensitivity:} 0.9281
+    % Specificity calculation
+    \item \textbf{Specificity:} 0.9640
+    % AUC value reported from ROC analysis
+    \item \textbf{AUC:} 0.9913
+\end{itemize}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Final Evaluation Summary
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Conclusion}
+
+% Summarize model performance with references to key metrics
+The evaluation metrics demonstrate that the fine-tuned ResNet50 model performs strongly in 
+multi-class lung cancer classification. High sensitivity and specificity indicate effective 
+detection of both positive and negative cases across all classes. Additionally, the macro AUC score 
+of 0.9913 reflects excellent discriminative ability, confirming the model's potential suitability 
+for clinical diagnostic assistance.
+
+% Link performance with relevant SDGs
+Furthermore, this research contributes to the achievement of the United Nations Sustainable 
+Development Goals (SDGs), specifically:
+
+\begin{itemize}
+    \item \textbf{Goal 3:} Ensure healthy lives and promote well-being for all at all ages — by 
+    supporting early and accurate detection of lung cancer.
+    \item \textbf{Goal 9:} Build resilient infrastructure, promote inclusive and sustainable 
+    industrialization and foster innovation — by leveraging AI technologies for advanced healthcare 
+    diagnostics.
+    \item \textbf{Goal 17:} Strengthen the means of implementation and revitalize the global 
+    partnership for sustainable development — by encouraging collaborative research and sharing open 
+    medical AI tools across borders.
+\end{itemize}

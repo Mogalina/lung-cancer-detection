@@ -1,0 +1,5 @@
+rootProject.name = 'backend'
+include 'service'
+include 'controller'
+include 'configuration'
+
