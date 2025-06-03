@@ -25,7 +25,7 @@ public class PredictionService {
      * @param webClientBuilder the builder used to create the WebClient instance
      */
     public PredictionService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8000").build();
+        this.webClient = webClientBuilder.baseUrl("http://localhost:6000").build();
     }
 
     /**

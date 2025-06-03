@@ -28,6 +28,6 @@ COPY app/configs /app/configs
 COPY saved-models /app/saved-models
 COPY app/logs /app/logs
 
-EXPOSE 8000
+EXPOSE 6000
 
-CMD ["conda", "run", "--no-capture-output", "-n", "lung_cancer_env", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["conda", "run", "--no-capture-output", "-n", "lung_cancer_env", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "6000"]
