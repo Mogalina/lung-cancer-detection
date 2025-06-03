@@ -1,5 +1,6 @@
 import torch
 import contextlib
+import numpy as np
 from torchvision import datasets
 from torch.utils.data import DataLoader
 from torch.optim import Adam
@@ -8,6 +9,8 @@ from app.model.model import LungCancerModel
 from typing import Tuple, Dict
 from torchinfo import summary
 from app.utils.utils import *
+from sklearn.metrics import accuracy_score, confusion_matrix, recall_score, roc_auc_score
+from sklearn.preprocessing import label_binarize
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -191,32 +194,69 @@ class LungCancerModelService:
 
     def test(self) -> float:
         """
-        Evaluate the model on the test dataset.
+        Evaluate the model on the test dataset and compute full evaluation metrics.
 
         Returns:
             float: The accuracy on the test dataset.
         """
-        # Locate the test directory and prepare the dataset and loader
-        test_dir: str = os.path.join(self.data_dir, "split", "test")
-        test_dataset: datasets.ImageFolder = datasets.ImageFolder(test_dir, transform=self.transform)
-        test_loader: DataLoader = DataLoader(test_dataset, batch_size=self.batch_size)
+        # Prepare test dataset and loader
+        test_dir = os.path.join(self.data_dir, "split", "test")
+        test_dataset = datasets.ImageFolder(test_dir, transform=self.transform)
+        test_loader = DataLoader(test_dataset, batch_size=self.batch_size)
 
         logger.info(f"Testing samples: {len(test_dataset)}")
         self.model.model.eval()
 
-        correct: int = 0
-        total: int = 0
+        all_preds = []
+        all_labels = []
+        all_probs = []
 
         with torch.no_grad():
             for images, labels in tqdm(test_loader, desc="Testing"):
-                images: torch.Tensor = images.to(self.device)
-                labels: torch.Tensor = labels.to(self.device)
-                outputs: torch.Tensor = self.model.model(images)
-                preds: torch.Tensor
-                _, preds = torch.max(outputs, 1)
-                correct += (preds == labels).sum().item()
-                total += labels.size(0)
+                images = images.to(self.device)
+                labels = labels.to(self.device)
+                outputs = self.model.model(images)
 
-        test_accuracy: float = 100 * correct / total
-        logger.info(f"Test Accuracy: {test_accuracy:.2f}%")
-        return test_accuracy
+                probs = torch.softmax(outputs, dim=1)
+
+                preds = torch.argmax(probs, dim=1)
+
+                all_preds.extend(preds.cpu().numpy())
+                all_labels.extend(labels.cpu().numpy())
+                all_probs.extend(probs.cpu().numpy())
+
+        all_preds = np.array(all_preds)
+        all_labels = np.array(all_labels)
+        all_probs = np.array(all_probs)
+
+        n_classes = len(test_dataset.classes)
+
+        all_labels_bin = label_binarize(all_labels, classes=range(n_classes))
+
+        acc = accuracy_score(all_labels, all_preds)
+        cm = confusion_matrix(all_labels, all_preds)
+        recall = recall_score(all_labels, all_preds, average='macro')
+
+        try:
+            auc = roc_auc_score(all_labels_bin, all_probs, average='macro', multi_class='ovr')
+        except ValueError:
+            auc = float('nan')
+
+        specificities = []
+        for i in range(n_classes):
+            tp = cm[i, i]
+            fn = cm[i, :].sum() - tp
+            fp = cm[:, i].sum() - tp
+            tn = cm.sum() - (tp + fp + fn)
+            specificity = tn / (tn + fp) if (tn + fp) > 0 else 0
+            specificities.append(specificity)
+
+        avg_specificity = np.mean(specificities)
+
+        logger.info(f"\nConfusion Matrix:\n{cm}")
+        logger.info(f"Accuracy: {acc:.4f}")
+        logger.info(f"AUC (macro): {auc:.4f}")
+        logger.info(f"Recall (Sensitivity, macro): {recall:.4f}")
+        logger.info(f"Specificity (average across classes): {avg_specificity:.4f}")
+
+        return acc

@@ -9,7 +9,7 @@ paths:
 # === Hyperparameters used during training ===
 hyperparameters:
     # Number of samples per batch during training and validation.
-    batch_size: 32
+    batch_size: 16
 
     # Total number of times the entire training dataset is passed through the model.
     num_epochs: 20

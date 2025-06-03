@@ -8,6 +8,8 @@ dependencies:
     - pip
     - pytorch
     - torchvision
+    - numpy
+    - scikit-learn
     - pip:
         - fastapi
         - uvicorn[standard]
