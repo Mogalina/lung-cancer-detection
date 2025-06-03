@@ -1,0 +1,127 @@
+% --------------------------------------------------------------------------------------------------
+% Section: Conclusion of the Paper
+% --------------------------------------------------------------------------------------------------
+
+\section{Conclusion}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Summary of outcomes of the project
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Summary of Outcomes}
+
+% High-level context and goal of the project
+Lung cancer remains one of the leading causes of cancer-related mortality worldwide, largely due to 
+the difficulty of early detection. This project addresses this critical challenge by introducing a 
+modular deep learning pipeline that supports the automated detection, classification, and 
+localization of lung abnormalities using axial slices from chest CT scans.
+
+% Brief overview of the system architecture (two stages)
+The system is built around 2D Convolutional Neural Networks (CNNs) and is composed of two major stages:
+
+\begin{enumerate}
+    % First stage: classification
+    \item \textbf{Primary Classification Model:} A multi-class CNN that categorizes CT slices into 
+    one of three classes: \textit{Normal}, \textit{Benign}, or \textit{Malignant}. This model 
+    filters out normal cases and prioritizes potentially pathological slices for further analysis.
+    
+    % Second stage: localization for abnormal cases
+    \item \textbf{Tumor Localization Model:} For cases identified as \textit{Benign} or 
+    \textit{Malignant}, a second CNN performs spatial localization by predicting bounding box 
+    coordinates around the suspected tumor region. This output supports radiologists by highlighting 
+    the exact area of concern.
+\end{enumerate}
+
+% Description of the modular architecture and dataset used
+Each component is independently trained and validated, allowing the system to remain flexible and 
+robust. The modular nature of the pipeline ensures that individual models can be updated, retrained, 
+or replaced without affecting the entire system.
+
+% Dataset details
+The pipeline was trained and evaluated using the publicly available \textbf{IQ-OTH/NCCD Lung Cancer 
+Dataset}, obtained from The Cancer Imaging Archive (TCIA). The dataset includes diverse CT scans 
+from patients of varying demographics and cancer stages, captured across multiple slices in axial 
+view. This diversity helped improve model generalization and applicability across real-world 
+scenarios.
+
+% Wrap-up statement about the system’s potential
+Overall, the project demonstrates that CNN-based systems can effectively assist in the early 
+detection of lung cancer, offering both classification and localization capabilities that are 
+valuable in a clinical decision-support context.
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Future directions and possible enhancements
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Future Improvements}
+
+% Description of planned or proposed technical upgrades
+While the current implementation demonstrates encouraging results, several enhancements can further 
+improve the model’s utility and performance:
+
+\begin{itemize}
+    % Performance improvement by GPU acceleration
+    \item \textbf{GPU-Accelerated Training:} The current implementation is limited to CPU-based 
+    training, which significantly increases computation time. Future iterations should leverage GPU 
+    acceleration to drastically reduce training time and enable experimentation with larger models 
+    or 3D volumetric inputs.
+    
+    % Adding temporal/spatial context using 3D volume input
+    \item \textbf{3D CT Volume Integration:} The pipeline currently processes individual 2D slices. 
+    Integrating 3D CNNs could improve spatial coherence and provide a more holistic understanding 
+    of tumor structure across adjacent slices.
+    
+    % Clinical relevance and real-world testing
+    \item \textbf{Clinical Validation:} Collaborating with radiologists and deploying the pipeline 
+    in a clinical simulation setting could provide feedback for refining the system and identifying 
+    failure cases.
+    
+    % Real-world deployment integration ideas
+    \item \textbf{Pipeline Automation:} Future work could explore integrating automated DICOM 
+    preprocessing, PACS compatibility, and real-time inference modules to enable a fully integrated 
+    clinical tool.
+\end{itemize}
+
+% --------------------------------------------------------------------------------------------------
+% Subsection: Sustainability relevance of the project
+% --------------------------------------------------------------------------------------------------
+
+\subsection{Sustainable Development Goals (SGDs)}
+
+% High-level justification aligning the project with SDGs
+The implementation of a deep learning-based \textbf{lung cancer classification system} not only 
+showcases the power of artificial intelligence in modern healthcare but also aligns with several 
+core objectives of the \textbf{United Nations Sustainable Development Goals (SDGs)}.
+
+\begin{itemize}
+    % SDG 3: Health and well-being
+    \item \textbf{Goal 3 – Ensure healthy lives and promote well-being for all at all ages:} By 
+    enabling earlier and more accurate detection of lung cancer through automated imaging analysis, 
+    this project contributes directly to improving health outcomes and reducing mortality. Early 
+    diagnosis can significantly enhance the effectiveness of treatment, improving patients' quality 
+    of life and life expectancy.
+    
+    % SDG 9: Innovation and infrastructure
+    \item \textbf{Goal 9 – Build resilient infrastructure, promote inclusive and sustainable 
+    industrialization and foster innovation:} This AI-powered solution exemplifies how innovative 
+    technologies can transform traditional healthcare systems. The use of robust, scalable deep 
+    learning models within an accessible framework encourages the development of intelligent medical 
+    infrastructure that can be adapted globally, especially in resource-constrained regions.
+    
+    % SDG 17: Collaboration and partnerships
+    \item \textbf{Goal 17 – Strengthen the means of implementation and revitalize the global 
+    partnership for sustainable development:} Collaboration between data scientists, healthcare 
+    providers, and international research communities is vital. This project encourages 
+    interdisciplinary cooperation and open-source contributions, promoting shared knowledge and 
+    collective advancement toward better global healthcare systems.
+\end{itemize}
+
+% Final wrap-up paragraph
+By addressing these SDGs, the project not only advances AI in medicine but also actively supports 
+the creation of a \textbf{healthier, more innovative, and cooperative global society}.
+
+% Final concluding statement of the entire section
+In conclusion, the proposed deep learning system provides a promising foundation for AI-assisted 
+lung cancer screening. With further development and validation, such systems can serve as powerful 
+diagnostic aids in clinical workflows, ultimately contributing to earlier detection and better 
+patient outcomes.
