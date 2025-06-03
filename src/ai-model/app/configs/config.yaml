@@ -1,0 +1,29 @@
+# === Path configurations ===
+paths:
+    # Directory where dataset image folders are located.
+    data_dir: "data"
+
+    # Path to save or load the trained model.
+    model_path: "saved-models/resnet50-lung-cancer.pth"
+
+# === Hyperparameters used during training ===
+hyperparameters:
+    # Number of samples per batch during training and validation.
+    batch_size: 32
+
+    # Total number of times the entire training dataset is passed through the model.
+    num_epochs: 20
+
+    # Learning rate for the optimizer.
+    learning_rate: 0.0001
+
+    # Number of output classes.
+    num_classes: 3
+
+# === Training-related settings ===
+training:
+    # The target size to which all input images will be resized.
+    image_size: [ 224, 224 ]
+
+    # Whether to use a pre-trained model.
+    use_pretrained: false
