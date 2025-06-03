@@ -14,7 +14,7 @@ This system uses a two-stage deep learning approach:
    - Benign
    - Malignant
 
-3. Localization Model \
+3. Localization Model (Future Improvement) \
    If the image is benign or malignant, a secondary model outputs bounding boxes highlighting the tumor region.
 
 ### Features:
