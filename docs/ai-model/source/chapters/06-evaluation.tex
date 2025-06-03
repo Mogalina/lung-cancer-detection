@@ -13,7 +13,7 @@
 % Explain the importance of evaluation metrics in model performance assessment
 To assess the performance of the lung cancer detection model based on ResNet50, several standard 
 evaluation metrics were used. These metrics provide a comprehensive overview of how well the model 
-performs on the task of distinguishing between cancerous and non-cancerous lung images.
+performs on the task of distinguishing between multiple lung cancer classifications.
 
 % List of commonly used metrics with definitions and formulas
 \begin{itemize}
@@ -52,20 +52,23 @@ performs on the task of distinguishing between cancerous and non-cancerous lung 
 
 % Present the confusion matrix as a result of model testing
 After training the ResNet50 model on the lung cancer dataset and evaluating on the test set, we 
-obtained the following sample confusion matrix:
+obtained the following confusion matrix:
 
 % Confusion Matrix Table
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|}
+    \begin{tabular}{|c|c|c|c|}
         \hline
-        \textbf{} & \textbf{Predicted Positive} & \textbf{Predicted Negative} \\
+        \textbf{} & \textbf{Predicted Benign} & \textbf{Predicted Malignant} & \textbf{Predicted Normal} \\
         \hline
-        \textbf{Actual Positive} & 85 (TP) & 15 (FN) \\
+        \textbf{Actual Benign} & 165 & 1 & 14 \\
         \hline
-        \textbf{Actual Negative} & 10 (FP) & 90 (TN) \\
+        \textbf{Actual Malignant} & 3 & 162 & 16 \\
+        \hline
+        \textbf{Actual Normal} & 5 & 0 & 177 \\
         \hline
     \end{tabular}
+    \caption{Confusion matrix of model predictions across three classes.}
 \end{table}
 
 % --------------------------------------------------------------------------------------------------
@@ -75,17 +78,17 @@ obtained the following sample confusion matrix:
 \subsection{Derived Metric Values}
 
 % Compute evaluation metrics using values from the confusion matrix
-Based on the confusion matrix shown above, we compute the following metric values:
+Based on the confusion matrix shown above, we compute the following metric values (reported by the system):
 
 \begin{itemize}
-    % Accuracy calculation from TP, TN, FP, FN
-    \item Accuracy = $\frac{85 + 90}{85 + 15 + 10 + 90} = \frac{175}{200} = 0.875$
+    % Accuracy calculation
+    \item \textbf{Accuracy:} 0.9282
     % Sensitivity calculation
-    \item Sensitivity = $\frac{85}{85 + 15} = \frac{85}{100} = 0.85$
+    \item \textbf{Sensitivity:} 0.9281
     % Specificity calculation
-    \item Specificity = $\frac{90}{90 + 10} = \frac{90}{100} = 0.90$
+    \item \textbf{Specificity:} 0.9640
     % AUC value reported from ROC analysis
-    \item AUC = 0.92 (obtained using ROC analysis)
+    \item \textbf{AUC:} 0.9913
 \end{itemize}
 
 % --------------------------------------------------------------------------------------------------
@@ -95,17 +98,23 @@ Based on the confusion matrix shown above, we compute the following metric value
 \subsection{Conclusion}
 
 % Summarize model performance with references to key metrics
-The evaluation metrics suggest that the fine-tuned ResNet50 model performs well in identifying lung 
-cancer from medical images. Both sensitivity and specificity are relatively high, indicating 
-balanced performance in correctly detecting both positive and negative cases. The AUC score of 0.92 
-reflects strong discriminative capability, supporting the effectiveness of the model for clinical 
-diagnostic applications.
+The evaluation metrics demonstrate that the fine-tuned ResNet50 model performs strongly in 
+multi-class lung cancer classification. High sensitivity and specificity indicate effective 
+detection of both positive and negative cases across all classes. Additionally, the macro AUC score 
+of 0.9913 reflects excellent discriminative ability, confirming the model's potential suitability 
+for clinical diagnostic assistance.
 
 % Link performance with relevant SDGs
-Furthermore, this research contributes to the achievement of the United Nations Sustainable Development Goals (SDGs), specifically:
+Furthermore, this research contributes to the achievement of the United Nations Sustainable 
+Development Goals (SDGs), specifically:
 
 \begin{itemize}
-    \item \textbf{Goal 3:} Ensure healthy lives and promote well-being for all at all ages — by supporting early and accurate detection of lung cancer.
-    \item \textbf{Goal 9:} Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation — by leveraging AI technologies for advanced healthcare diagnostics.
-    \item \textbf{Goal 17:} Strengthen the means of implementation and revitalize the global partnership for sustainable development — by encouraging collaborative research and sharing open medical AI tools across borders.
+    \item \textbf{Goal 3:} Ensure healthy lives and promote well-being for all at all ages — by 
+    supporting early and accurate detection of lung cancer.
+    \item \textbf{Goal 9:} Build resilient infrastructure, promote inclusive and sustainable 
+    industrialization and foster innovation — by leveraging AI technologies for advanced healthcare 
+    diagnostics.
+    \item \textbf{Goal 17:} Strengthen the means of implementation and revitalize the global 
+    partnership for sustainable development — by encouraging collaborative research and sharing open 
+    medical AI tools across borders.
 \end{itemize}
