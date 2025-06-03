@@ -130,7 +130,6 @@ public class MainController {
         String fileName = imageFile.getName();
         byte[] fileBytes = Files.readAllBytes(imageFile.toPath());
 
-        // ⚠️ Corrected the form field name to "image"
         String partHeader = "--" + boundary + "\r\n" +
                 "Content-Disposition: form-data; name=\"image\"; filename=\"" + fileName + "\"\r\n" +
                 "Content-Type: " + mimeType + "\r\n\r\n";
